@@ -1,1 +1,1 @@
-please put your own words here
+‘This repository contains solutions to shell tasks’
