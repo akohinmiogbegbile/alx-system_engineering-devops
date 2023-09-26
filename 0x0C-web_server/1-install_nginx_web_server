@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Commands to install nginx on web server
+
+sudo apt-get update
+sudo apt-get install nginx
+sudo ufw 'Nginx HTTP'
+
+echo "Hello world!" | sudo tee /var/www/html/index.html
+
+# Testing nginx configurations
+sudo nginx -t
+
+sudo service nginx reload
