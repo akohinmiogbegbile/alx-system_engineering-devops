@@ -14,9 +14,12 @@ sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled
 
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-string_for_replacement = "listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html; {\n\troot \/var/www/html;\n\tinternal;\n\t}"
+string_for_replacement = "listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\troot \/var/www/html;\n\tinternal;\n\t}"
 
 sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Test the confid
+sudo nginx -t
 
 #restart nginx after implementing changes
 
