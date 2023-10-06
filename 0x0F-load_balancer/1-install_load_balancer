@@ -14,7 +14,7 @@ server_config=\
 frontend  akohinmiogbegbile_frontend
         bind *:80
         mode http
-        default_backend besthor_backend
+        default_backend akohinmiogbegbile_backend
 backend akohinmiogbegbile_backend
         balance roundrobin
         server 301824-web-01 52.23.177.223:80 check
