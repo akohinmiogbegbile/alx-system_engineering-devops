@@ -1,32 +1,24 @@
 #!/usr/bin/env bash
-# Create a script to install and configure HAProxy on lb-01 server
-# Configure HAProxy to send traffic to web-01 and web-02 servers
-# Distribute requests using a roundrobin algorithm
-# Make sure that HAProxy can be managed via an init script
+# Installs HAProxy with the following configurations:
+# - Enables management via the init script.
+# - Distributes requests using a round-robin algorithm.
 
-# Install and configure HAproxy on my lb-01 server.
-sudo apt-get -y update
-apt-get -y install haproxy
+sudo apt-get install -y haproxy
 
-# edit config file
-server_config=\
-"
-frontend  akohinmiogbegbile_frontend
-        bind *:80
-        mode http
-        default_backend akohinmiogbegbile_backend
-backend akohinmiogbegbile_backend
-        balance roundrobin
-        server 301824-web-01 52.23.177.223:80 check
-        server 301824-web-02 100.26.210.47:80 check
-"
-echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
-
-# enable haproxy to be started by init script
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
-# Testing the HAproxy configuration file
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+cat <<EOT | sudo tee -a /etc/haproxy/haproxy.cfg
+frontend tilomath.tech
+    timeout client  30000
+    bind 0:80
+    default_backend tilomath.tech_backend
 
-# Restart the Nginx service
+backend tilomath.tech_backend
+    timeout connect  3000
+    timeout server  30000
+    balance roundrobin
+    server 228560-web-01 54.237.53.29:80 check
+    server 228560-web-02 100.26.210.47:80 check
+EOT
+
 sudo service haproxy restart
